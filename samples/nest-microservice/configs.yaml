@@ -1,0 +1,22 @@
+version: '1.0'
+
+configs:
+
+application:
+  port: 23700
+  
+  validation:
+    enabled: true
+    options:
+      forbidUnknownValues: true
+      whitelist: true
+      forbidNonWhitelisted: true
+
+transporters:
+  nats:
+    enable: true
+    timeout: 30000
+    options:
+      servers:
+        - nats://nats-0.nats-headless.common.svc.cluster.local:4222
+      queue: nats.gateway.queue
