@@ -19,8 +19,9 @@ export class ProducerModule {
             const enable = configService.get('transporters.kafka.enable');
 
             if (!enable) {
-              Logger.log(`[Nest-kafka] Kafka producer not enable`);
+              Logger.log('[Nest-kafka] Kafka producer not enable');
               status.enable = false;
+              return null;
             }
 
             return {
@@ -35,7 +36,10 @@ export class ProducerModule {
     // Nếu không enable thì không register module
     if (!status.enable) {
       Logger.log('[Nest-kafka] Kafka producer not init');
-      return;
+      return {
+        module: ProducerModule,
+        imports: [],
+      };
     }
 
     return {
