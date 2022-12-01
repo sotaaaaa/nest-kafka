@@ -8,7 +8,7 @@ import { ProducerService } from './producer.service';
 @Module({})
 export class ProducerModule {
   static registerAsync(): DynamicModule {
-    const status = { enable: false };
+    const status = { enable: true };
     const imports = [
       ClientsModule.registerAsync([
         {
