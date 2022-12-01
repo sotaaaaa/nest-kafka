@@ -33,7 +33,7 @@ export class ProducerService
 
   /**
    * Connect đến Kafka khi application được init
-   * Trong quá trình send hoặc init thì emit và send sẽ không dùng dudowjc
+   * Trong quá trình send hoặc init thì emit và send sẽ không dùng được
    */
   async onApplicationBootstrap(): Promise<void> {
     await this.clientKafka.connect().then((producer) => {

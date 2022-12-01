@@ -8,6 +8,7 @@ import { ProducerService } from './producer.service';
 @Module({})
 export class ProducerModule {
   static registerAsync(): DynamicModule {
+    const status = { enable: false };
     const imports = [
       ClientsModule.registerAsync([
         {
@@ -19,7 +20,7 @@ export class ProducerModule {
 
             if (!enable) {
               Logger.log(`[Nest-kafka] Kafka producer not enable`);
-              return null;
+              status.enable = false;
             }
 
             return {
@@ -30,6 +31,12 @@ export class ProducerModule {
         },
       ]),
     ];
+
+    // Nếu không enable thì không register module
+    if (!status.enable) {
+      Logger.log('[Nest-kafka] Kafka producer not init');
+      return;
+    }
 
     return {
       module: ProducerModule,
