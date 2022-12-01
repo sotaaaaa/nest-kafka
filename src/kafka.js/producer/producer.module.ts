@@ -21,7 +21,6 @@ export class ProducerModule {
             if (!enable) {
               Logger.log('[Nest-kafka] Kafka producer not enable');
               status.enable = false;
-              return null;
             }
 
             return {
