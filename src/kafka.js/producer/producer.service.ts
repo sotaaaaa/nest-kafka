@@ -52,10 +52,14 @@ export class ProducerService
 
       const time =
         this.configService.get('transporters.kafka.timeout') || 10000;
+      const headers = options?.headers
+        ? { ...options?.headers, timestamp: Date.now() }
+        : { timestamp: Date.now() };
+
       const request: RequestKafka<I> = {
         key: uuidv4(),
         value: data,
-        headers: options?.headers ? options.headers : undefined,
+        headers: headers,
         context: options?.context ? options.context : undefined,
       };
 
@@ -78,15 +82,19 @@ export class ProducerService
     try {
       options = options || {};
 
+      const time =
+        this.configService.get('transporters.kafka.timeout') || 10000;
+      const headers = options?.headers
+        ? { ...options?.headers, timestamp: Date.now() }
+        : { timestamp: Date.now() };
+
       const request: RequestKafka<I> = {
         key: uuidv4(),
         value: data,
-        headers: options?.headers ? options.headers : undefined,
+        headers: headers,
         context: options?.context ? options.context : undefined,
       };
 
-      const time =
-        this.configService.get('transporters.kafka.timeout') || 10000;
       const emited = await firstValueFrom(
         this.clientKafka
           .emit<any, RequestKafka<I>>(event, request)
