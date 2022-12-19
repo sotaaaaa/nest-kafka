@@ -85,8 +85,8 @@ export class ProducerService
       const time =
         this.configService.get('transporters.kafka.timeout') || 10000;
       const headers = options?.headers
-        ? { ...options?.headers, timestamp: Date.now() }
-        : { timestamp: Date.now() };
+        ? { ...options?.headers, timestamp: new Date().toISOString() }
+        : { timestamp: new Date().toISOString() };
 
       const request: RequestKafka<I> = {
         key: uuidv4(),
